@@ -351,6 +351,11 @@ public class Icons{
 		public final Icon place_hex_hollow = get();
 		public final Icon wall_opening = get();
 		public final Icon gov = get();
+        {get();}
+        public final Icon place_free_line = get();
+        public final Icon place_arc = get();
+        public final Icon place_bezier = get();
+        public final Icon place_free_rect = get();
 
 		{i = 0;}
 		public final Icon b_muster = m();

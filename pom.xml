@@ -12,8 +12,8 @@
     <description>Mod add new placers such as free line, arcs and curves.</description>
 
     <properties>
-        <maven.compiler.target>21</maven.compiler.target>
-        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- These settings will go into the mods _Info.txt file -->
@@ -332,7 +332,7 @@
             <properties>
                 <game.mod.directory>${user.home}/AppData/Roaming/songsofsyx/mods</game.mod.directory>
                 <!--                <game.install.directory>C:/Program Files (x86)/Steam/steamapps/common/Songs of Syx</game.install.directory>-->
-                <game.install.directory>E:/Songs Of Syx/0.70.18</game.install.directory>
+                <game.install.directory>E:/Songs Of Syx/songsofsyx/0.70.26</game.install.directory>
             </properties>
             <activation>
                 <os>

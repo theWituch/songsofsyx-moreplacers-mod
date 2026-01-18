@@ -338,7 +338,7 @@ public class JobBuildStructure {
 
 		@Override
 		public boolean canBePlacedAs(PLACER_TYPE t) {
-			return t != PLACER_TYPE.LINE;
+			return t != PLACER_TYPE.LINE && t != PLACER_TYPE.FREE_LINE && t != PLACER_TYPE.ARC_3_POINT && t != PLACER_TYPE.BEZIER_CURVE;
 		}
 
 		@Override
