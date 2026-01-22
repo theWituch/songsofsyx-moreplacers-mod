@@ -1,0 +1,6 @@
+view.tool.PLACER_TYPE: {
+	"free rectangle": "wolny prostokąt",
+	"free line": "wolna linia",
+	"3 point arc": "łuk z 3 punktów",
+	"bezier curve": "krzywa Beziera",
+},
