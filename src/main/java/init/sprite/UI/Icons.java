@@ -3,8 +3,8 @@ package init.sprite.UI;
 import java.io.IOException;
 
 import game.GAME;
-import init.paths.PathParser;
 import init.sprite.UI.Icon.IconSheet;
+import init.tool.PathParser;
 import snake2d.CORE;
 import snake2d.SPRITE_RENDERER;
 import snake2d.util.color.COLOR;
@@ -351,7 +351,6 @@ public class Icons{
 		public final Icon place_hex_hollow = get();
 		public final Icon wall_opening = get();
 		public final Icon gov = get();
-		public final Icon advice =get();
 
 		{i = 0;}
 		public final Icon b_muster = m();
@@ -514,21 +513,6 @@ public class Icons{
 		public final IconS plus2 = get();
 		public final IconS plusBig = get();
 		public final IconS copy = get();
-		public final IconS smallSkull = get();
-		public final IconS divWalk = get();
-		public final IconS divRun = get();
-
-		public final IconS typeCitizen = get();
-		public final IconS typeRetire = get();
-		public final IconS typeRecruit = get();
-		public final IconS typeSoldier = get();
-		public final IconS typeStudent = get();
-		public final IconS typePrison = get();
-		public final IconS typeTourist = get();
-		public final IconS typeRioter = get();
-		public final IconS typeCrazy = get();
-		public final IconS typeChild = get();
-
 		public IconS chevron(DIR d) {
 			return chevrons[d.orthoID()];
 		}
@@ -607,8 +591,7 @@ public class Icons{
 		public final Icon infra = get();
 		public final Icon crate = get();
 		public final Icon crown = get();
-		public final Icon crossheir = get();
-		public final Icon swords = get();
+
 		{
 			i = 0;
 		}

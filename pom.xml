@@ -22,8 +22,8 @@
         <mod.description>${project.description}</mod.description>
         <mod.author>thewituch@gmail.com</mod.author>
         <mod.info>Compatible with version ${game.version.major}.${game.version.minor}</mod.info>
-        <game.version.major>70</game.version.major>
-        <game.version.minor>18</game.version.minor>
+        <game.version.major>69</game.version.major>
+        <game.version.minor>39</game.version.minor>
 
         <!-- Build settings -->
         <game.version.directory>V${game.version.major}</game.version.directory>
@@ -61,7 +61,7 @@
             <groupId>com.songsofsyx</groupId>
             <artifactId>songsofsyx</artifactId>
             <version>${game.version.major}.${game.version.minor}</version>
-            <systemPath>${game.install.directory}/SongsOfSyx.jar</systemPath>
+            <systemPath>${basedir}/SongsOfSyx_V69.jar</systemPath>
             <scope>system</scope>
         </dependency>
 

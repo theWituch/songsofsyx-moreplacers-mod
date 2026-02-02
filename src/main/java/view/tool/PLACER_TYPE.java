@@ -2,10 +2,10 @@ package view.tool;
 
 import init.sprite.SPRITES;
 import init.sprite.UI.Icon;
+import init.text.D;
 import snake2d.util.map.MAP_SETTER;
 import snake2d.util.sets.ArrayList;
 import snake2d.util.sets.LIST;
-import util.text.D;
 import view.keyboard.KEYS;
 
 public abstract class PLACER_TYPE {

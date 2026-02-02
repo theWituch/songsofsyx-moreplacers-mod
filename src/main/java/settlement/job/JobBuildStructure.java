@@ -7,16 +7,15 @@ import static settlement.main.SETT.TWIDTH;
 
 import game.GAME;
 import game.GameDisposable;
-import game.audio.SoundRace;
+import game.audio.Sound;
 import game.faction.FResources.RTYPE;
-import init.constant.C;
+import init.C;
 import init.race.RACES;
 import init.race.Race;
 import init.resources.RESOURCE;
 import init.resources.STOCKPILE.StockpileImp;
 import init.sprite.SPRITES;
-import init.structure.STRUCTURES;
-import init.structure.Structure;
+import init.text.D;
 import init.type.BUILDING_PREFS;
 import settlement.entity.humanoid.Humanoid;
 import settlement.main.SETT;
@@ -43,7 +42,6 @@ import util.gui.misc.GBox;
 import util.gui.misc.GButt;
 import util.gui.panel.GPanel;
 import util.info.GFORMAT;
-import util.text.D;
 import view.main.VIEW;
 import view.subview.GameWindow;
 import view.tool.PLACABLE;
@@ -54,8 +52,7 @@ import view.tool.ToolConfig;
 
 public class JobBuildStructure {
 
-	public final Structure building;
-	public final TBuilding terrain;
+	public final TBuilding building;
 	public final Job wall;
 	public final Job ceiling;
 	public final PlacableMulti combo;
@@ -78,19 +75,17 @@ public class JobBuildStructure {
 		D.ts(JobBuildStructure.class);
 	}
 
-	private JobBuildStructure(Structure building) {
+	private JobBuildStructure(TBuilding building) {
 		this.building = building;
-		terrain = SETT.TERRAIN().BUILDINGS.get(building);
 		this.wall = new Wall();
 		this.ceiling = new Roof();
 		this.combo = new Combo();
 		this.convert = new Convert();
-
 	}
 
 	static LIST<JobBuildStructure> make(){
-		ArrayList<JobBuildStructure> all = new ArrayList<>(STRUCTURES.all().size());
-		for (Structure s : STRUCTURES.all()) {
+		ArrayList<JobBuildStructure> all = new ArrayList<>(TERRAIN().BUILDINGS.all().size());
+		for (TBuilding s : TERRAIN().BUILDINGS.all()) {
 			all.add(new JobBuildStructure(s));
 		}
 		return all;
@@ -100,14 +95,14 @@ public class JobBuildStructure {
 
 		Wall() {
 			super("WALL_" + building.key, building.resource, building.resAmount+1, true, building.nameWall,
-					¤¤WallD, terrain.wall.getIcon());
+					¤¤WallD, building.wall.getIcon());
 		}
 
 		@Override
 		void renderAbove(SPRITE_RENDERER r, int x, int y, int mask, int tx, int ty) {
 			for (DIR d : DIR.ORTHO) {
 				Job j = JOBS().getter.get(tx, ty, d);
-				if (j instanceof Wall || terrain.wall.is(tx, ty))
+				if (j instanceof Wall || building.wall.is(tx, ty))
 					mask |= d.mask();
 			}
 			SPRITES.cons().BIG.dashedThick.render(r, mask, x, y);
@@ -129,7 +124,7 @@ public class JobBuildStructure {
 				return PlacableMessages.¤¤MISC;
 			if (JOBS().getter.get(tx, ty) == this)
 				return PLACABLE.E;
-			if (t == terrain.wall)
+			if (t == building.wall)
 				return PLACABLE.E;
 			if (!overwrite) {
 				if (JOBS().getter.is(tx, ty)) {
@@ -141,14 +136,14 @@ public class JobBuildStructure {
 
 		@Override
 		boolean terrainNeedsClear(int tx, int ty) {
-			if (terrain.roof.is(tx, ty))
+			if (building.roof.is(tx, ty))
 				return false;
 			return super.terrainNeedsClear(tx, ty);
 		}
 
 		@Override
 		boolean resNeeds(int tx, int ty) {
-			if (terrain.roof.is(tx, ty))
+			if (building.roof.is(tx, ty))
 				return res != null && JOBS().progress.get(tx + ty * TWIDTH) == 0;
 			return super.resNeeds(tx, ty);
 		}
@@ -159,15 +154,15 @@ public class JobBuildStructure {
 		}
 
 		@Override
-		protected SoundRace constructSound() {
-			return terrain.sound;
+		protected Sound constructSound() {
+			return building.sound;
 		}
 
 		@Override
 		protected boolean construct(int tx, int ty) {
 			if (building.resource != null)
 				GAME.player().res().inc(building.resource,  RTYPE.CONSTRUCTION, -(building.resAmount+1));
-			terrain.wall.placeFixed(tx, ty);
+			building.wall.placeFixed(tx, ty);
 			return false;
 		}
 
@@ -183,7 +178,7 @@ public class JobBuildStructure {
 
 		@Override
 		public TerrainTile becomes(int tx, int ty) {
-			return terrain.wall;
+			return building.wall;
 		}
 
 		@Override
@@ -203,14 +198,14 @@ public class JobBuildStructure {
 
 		Roof() {
 			super("CEILING_" + building.key, building.resource, building.resAmount, false, building.nameCeiling,
-					¤¤CeilingD, terrain.roof.getIcon());
+					¤¤CeilingD, building.roof.getIcon());
 		}
 
 		@Override
 		void renderAbove(SPRITE_RENDERER r, int x, int y, int mask, int tx, int ty) {
 			for (DIR d : DIR.ORTHO) {
 				Job j = JOBS().getter.get(tx, ty, d);
-				if (j instanceof Wall || j instanceof Roof || terrain.roof.is(tx, ty))
+				if (j instanceof Wall || j instanceof Roof || building.roof.is(tx, ty))
 					mask |= d.mask();
 			}
 			SPRITES.cons().BIG.dashed.render(r, mask, x, y);
@@ -222,7 +217,7 @@ public class JobBuildStructure {
 			if (SETT.TERRAIN().get(tx, ty) == SETT.TERRAIN().WATER.DEEP) {
 				return PlacableMessages.¤¤MISC;
 			}
-			if (terrain.wall.is(tx, ty) && overwrite)
+			if (building.wall.is(tx, ty) && overwrite)
 				return null;
 			return super.problem(tx, ty, overwrite);
 		}
@@ -233,20 +228,20 @@ public class JobBuildStructure {
 		}
 
 		@Override
-		protected SoundRace constructSound() {
-			return terrain.sound;
+		protected Sound constructSound() {
+			return building.sound;
 		}
 
 		@Override
 		boolean terrainNeedsClear(int tx, int ty) {
-			if (terrain.wall.is(tx, ty))
+			if (building.wall.is(tx, ty))
 				return false;
 			return super.terrainNeedsClear(tx, ty);
 		}
 
 		@Override
 		boolean resNeeds(int tx, int ty) {
-			if (terrain.wall.is(tx, ty))
+			if (building.wall.is(tx, ty))
 				return false;
 			return super.resNeeds(tx, ty);
 		}
@@ -255,7 +250,7 @@ public class JobBuildStructure {
 		protected boolean construct(int tx, int ty) {
 			if (building.resource != null)
 				GAME.player().res().inc(building.resource, RTYPE.CONSTRUCTION, -building.resAmount);
-			terrain.roof.placeFixed(tx, ty);
+			building.roof.placeFixed(tx, ty);
 			return false;
 		}
 
@@ -266,7 +261,7 @@ public class JobBuildStructure {
 
 		@Override
 		public TerrainTile becomes(int tx, int ty) {
-			return terrain.roof;
+			return building.roof;
 		}
 
 		@Override
@@ -285,7 +280,7 @@ public class JobBuildStructure {
 	private final class Combo extends PlacableMulti {
 
 		public Combo() {
-			super(new Str(¤¤Structure).insert(0, building.name), ¤¤StructureD, terrain.iconCombo);
+			super(new Str(¤¤Structure).insert(0, building.name), ¤¤StructureD, building.iconCombo);
 		}
 
 		@Override
@@ -355,7 +350,7 @@ public class JobBuildStructure {
 	private final class Convert extends PlacableMulti {
 
 		public Convert() {
-			super(¤¤Convert, ¤¤ConvertD, new SPRITE.Twin(terrain.wall.getIcon(), SPRITES.icons().m.arrow_right));
+			super(¤¤Convert, ¤¤ConvertD, new SPRITE.Twin(building.wall.getIcon(), SPRITES.icons().m.arrow_right));
 		}
 
 
@@ -382,7 +377,7 @@ public class JobBuildStructure {
 			TerrainTile te = SETT.TERRAIN().get(tx, ty);
 			if (te == null || !(te instanceof TBuilding.BuildingComponent))
 				return ¤¤SameProblem;
-			if (terrain.isser.is(tx, ty))
+			if (building.isser.is(tx, ty))
 				return ¤¤SameProblem;
 
 			if (count) {
@@ -414,15 +409,15 @@ public class JobBuildStructure {
 
 		@Override
 		public void place(int tx, int ty, AREA a, PLACER_TYPE t) {
-			if (terrain.isser.is(tx, ty))
+			if (building.isser.is(tx, ty))
 				return;
 			TerrainTile te = SETT.TERRAIN().get(tx, ty);
 			if (te instanceof TBuilding.Wall && allocated + wall.resAmount() < SETT.ROOMS().STOCKPILE.tally().amountReservable.get(wall.res())) {
-				terrain.wall.placeFixed(tx, ty);
+				building.wall.placeFixed(tx, ty);
 				allocated += wall.resAmount();
 			}
 			else if ((te instanceof TBuilding.Ceiling || te instanceof TBuilding.Ceiling.Opening) && allocated + ceiling.resAmount() < SETT.ROOMS().STOCKPILE.tally().amountReservable.get(wall.res())) {
-				terrain.roof.placeFixed(tx, ty);
+				building.roof.placeFixed(tx, ty);
 				allocated += ceiling.resAmount();
 			}
 		}
