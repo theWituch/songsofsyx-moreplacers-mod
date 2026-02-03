@@ -24,6 +24,7 @@
         <mod.info>Compatible with version ${game.version.major}.${game.version.minor}</mod.info>
         <game.version.major>70</game.version.major>
         <game.version.minor>18</game.version.minor>
+        <game.version>0.${game.version.major}.${game.version.minor}</game.version>
 
         <!-- Build settings -->
         <game.version.directory>V${game.version.major}</game.version.directory>
@@ -59,10 +60,10 @@
         <!-- Game dependency SongsOfSyx.jar -->
         <dependency>
             <groupId>com.songsofsyx</groupId>
-            <artifactId>songsofsyx</artifactId>
-            <version>${game.version.major}.${game.version.minor}</version>
-            <systemPath>${game.install.directory}/SongsOfSyx.jar</systemPath>
-            <scope>system</scope>
+            <artifactId>songsofsyx-game-${game.version}</artifactId>
+            <version>${game.version}</version>
+            <classifier>jar</classifier>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
