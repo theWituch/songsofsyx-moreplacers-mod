@@ -1,0 +1,3 @@
+NAME: "Russian - More Placers",
+COVERAGE: 1.0,
+CHARSET: "eastern",
