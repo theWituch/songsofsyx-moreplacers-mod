@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>songs-of-syx.mods</groupId>
-    <artifactId>songs-of-syx-more-placers-mod</artifactId>
-    <version>0.0.1</version>
+    <groupId>com.songsofsyx.mods</groupId>
+    <artifactId>songsofsyx-moreplacers-mod</artifactId>
+    <version>0.1.0</version>
 
     <name>More Placers</name>
     <description>Mod add new placers such as free line, arcs and curves.</description>
@@ -332,8 +332,7 @@
             <id>windows</id>
             <properties>
                 <game.mod.directory>${user.home}/AppData/Roaming/songsofsyx/mods</game.mod.directory>
-                <!--                <game.install.directory>C:/Program Files (x86)/Steam/steamapps/common/Songs of Syx</game.install.directory>-->
-                <game.install.directory>E:/Songs Of Syx/0.70.18</game.install.directory>
+                <game.install.directory>C:/Program Files (x86)/Steam/steamapps/common/Songs of Syx</game.install.directory>
             </properties>
             <activation>
                 <os>
