@@ -1,0 +1,3 @@
+NAME: "Turkish - More Placers",
+COVERAGE: 1.0,
+CHARSET: "turkish",
